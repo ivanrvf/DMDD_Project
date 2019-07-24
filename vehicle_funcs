@@ -1,0 +1,64 @@
+create function [dbo].[addVehicleSeatProperty](@vehicleCategoryId int)
+returns int
+as 
+Begin
+return case when @vehicleCategoryId = 1 then 4
+		when @vehicleCategoryId = 2 then 7
+		when @vehicleCategoryId = 3 then 2
+		end
+End
+
+
+create function [dbo].[decryptPass]( @Password varbinary(400))
+returns nvarchar(500)
+As
+BEGIN
+	declare @decryptPassword nvarchar(500) = convert(nvarchar, decryptbykey(@Password));
+	RETURN (@decryptPassword)
+END;
+
+
+
+create function [dbo].[encryptPass]( @Password nvarchar(500))
+returns varbinary(400)
+As
+BEGIN
+	declare @encryptPassword varbinary(400) = encryptbykey(Key_GUID('userAuth_sm'),convert(varbinary,@Password));
+	RETURN (@encryptPassword)
+END;
+
+
+
+CREATE FUNCTION [dbo].[getStateByCity] (@city VARCHAR(250))
+RETURNS VARCHAR(250)
+AS BEGIN
+    RETURN
+        CASE 
+            WHEN @city='Boston' THEN 'MA'
+            WHEN @city='Fall River' THEN 'MA'
+            WHEN @city='Cambridge' THEN 'MA'
+            WHEN @city='Framingham' THEN 'MA'
+            WHEN @city='Quincy' THEN 'MA'
+            WHEN @city='Waltham' THEN 'MA'
+            WHEN @city='West Springfield' THEN 'MA'
+            WHEN @city='New York' THEN 'NY'
+            WHEN @city='Rochester' THEN 'NY'
+            WHEN @city='Syracuse' THEN 'NY'
+            WHEN @city='Watertown' THEN 'NY'
+            WHEN @city='Chicago' THEN 'IL'
+            WHEN @city='Springfield' THEN 'IL'
+            WHEN @city='Bloomington' THEN 'IL'
+            WHEN @city='Los Angeles' THEN 'CA'
+            WHEN @city='San Diego' THEN 'CA'
+            WHEN @city='San Jose' THEN 'CA'
+            WHEN @city='San Francisco' THEN 'CA'
+            WHEN @city='Houston' THEN 'TX'
+            WHEN @city='Dallas' THEN 'TX'
+            WHEN @city='Austin' THEN 'TX'
+            WHEN @city='El Paso' THEN 'TX'
+            ELSE 'UNN'
+        END
+END
+
+
+
